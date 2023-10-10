@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "side-project"
+version = "0.1.0"
+description = ""
+authors = ["mmolina2018 <mmolina2018@inf.udec.cl>"]
+readme = "README.md"
+packages = [{include = "side_project"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Jinja2 = "^3.1.2"
+fastapi = "^0.103.2"
+
+[tool.poetry.group.dev.dependencies]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
