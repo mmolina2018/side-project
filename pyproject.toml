@@ -4,12 +4,18 @@ version = "0.1.0"
 description = ""
 authors = ["mmolina2018 <mmolina2018@inf.udec.cl>"]
 readme = "README.md"
-packages = [{include = "side_project"}]
+packages = [
+    { include = "core", from = "src" },
+    { include = "api", from = "src" },
+    { include = "database", from = "src" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 Jinja2 = "^3.1.2"
 fastapi = "^0.103.2"
+psycopg2-binary = "^2.9.9"
+uvicorn = {version = "^0.23.2", extras = ["standard"]}
 
 [tool.poetry.group.dev.dependencies]
 
