@@ -1,4 +1,5 @@
 from database.psql import _get_db_targets
+from .exceptions import UserIdError
 
 def BaseSuccess(result):
     return result
@@ -6,18 +7,21 @@ def BaseError(error):
     raise Exception("BaseError")
 
 def get_targets(
-    pos,
-    object_id,
-    radius,
+    user_id,
     database,
     handle_success: BaseSuccess,
     handle_error: BaseError,
 ) -> dict[str, list]:
-       
+    
+    try:
+        result = _get_db_targets(user_id = user_id, database = database)
+        if len(result) == 0:
+            raise UserIdError(user_id)
+        return handle_success(result)
+    except UserIdError as e:
+        return handle_error(e)
+    
 
-    result = _get_db_targets(pos,radius)  # probablementes aca se manejen las excepciones, agregar ademas el id del objeto a la salida.
 
-
-    return result
 
 

@@ -12,3 +12,10 @@ class DatabaseError(WrapperException):
     def __init__(self, original_e, subcode=None):
         super().__init__(original_e, subcode)
 
+class UserIdError(Exception):
+    def __init__(self, user_id) -> None:
+        super().__init__()
+        self.user_id = user_id
+
+    def __str__(self) -> str:
+        return f"Can't retrieve matches, user_id not recognized {self.user_id}"
