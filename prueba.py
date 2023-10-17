@@ -11,5 +11,5 @@ db_config = {
 
 db = create_db(db_config)
 
-salida = get_targets(user_id="4",database=db,handle_success= handle_success,handle_error= handle_error)
+salida = get_targets(user_id="2",database=db,handle_success= handle_success,handle_error= handle_error)
 print (salida)

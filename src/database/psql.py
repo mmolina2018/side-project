@@ -1,14 +1,5 @@
 import psycopg2
 from psycopg2 import pool
-#from config import db_config
-
-db_config = {
-    "name":"sideproject",
-    "user":"myuser",
-    "password":"pass",
-    "host":"localhost",
-    "port":"5432",
-}
 
 def create_db(db_config):
     db_name = db_config["name"]
@@ -29,13 +20,14 @@ def create_db(db_config):
     return connection_pool
 
 
-
-def _get_db_targets(user_id,database):
-
+def _get_db_targets(user_id, database):
     connection = database.getconn()
     with connection.cursor() as cur:
-        cur.execute("SELECT m.match_id, m.target_id, m.info FROM match m JOIN targets t ON m.target_id = t.target_id WHERE t.user_id = %s", (user_id,))
+        cur.execute(
+            "SELECT m.match_id, m.target_id, m.info FROM match m JOIN targets t ON m.target_id = t.target_id WHERE t.user_id = %s",
+            (user_id,),
+        )
         result = cur.fetchall()
-    
+
     database.putconn(connection)
     return result
