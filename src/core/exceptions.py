@@ -13,7 +13,7 @@ class DatabaseError(WrapperException):
         super().__init__(original_e, subcode)
 
 
-class UserIdError(Exception):
+class UserIdError(BaseException):
     def __init__(self, user_id) -> None:
         super().__init__()
         self.user_id = user_id
