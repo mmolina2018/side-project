@@ -16,6 +16,7 @@ Jinja2 = "^3.1.2"
 fastapi = "^0.103.2"
 psycopg2-binary = "^2.9.9"
 uvicorn = {version = "^0.23.2", extras = ["standard"]}
+prometheus-fastapi-instrumentator = "^6.1.0"
 
 [tool.poetry.group.dev.dependencies]
 

@@ -1,0 +1,27 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+}
+
+table {
+    width: 50%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    margin: auto;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #151e29;
+}
+
+th {
+    background-color: #151e29;
+    color: rgb(255, 255, 255);
+}
+
+td {
+   background-color: whitesmoke; 
+}

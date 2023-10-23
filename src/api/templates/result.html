@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tabla de usuario: {{ user_id }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+</head>
+
+<body>
+    <h1>tabla de usuario {{ user_id }}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Match ID</th>
+                <th>Target ID</th>
+                <th>Información del Match</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>{{ targets }}</td> 
+                    <td>prueba 2</td> 
+                    <td>prueba 3</td> 
+                </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

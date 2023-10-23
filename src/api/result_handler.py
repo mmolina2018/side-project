@@ -23,5 +23,4 @@ def _handle_server_error(err: Exception):
 
 
 def _handle_client_error(err: Exception):
-    print("logre entrar")
     raise HTTPException(status_code=400, detail=str(err))
