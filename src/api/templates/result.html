@@ -13,17 +13,19 @@
     <table>
         <thead>
             <tr>
-                <th>Match ID</th>
                 <th>Target ID</th>
+                <th>Match ID</th>
                 <th>Información del Match</th>
             </tr>
         </thead>
         <tbody>
+                {% for tar in targets %}
                 <tr>
-                    <td>{{ targets }}</td> 
-                    <td>prueba 2</td> 
-                    <td>prueba 3</td> 
+                    <td>{{ tar[1] }}</td> 
+                    <td>{{ tar[0] }}</td> 
+                    <td>{{ tar[2] }}</td> 
                 </tr>
+                {% endfor %}
         </tbody>
     </table>
 </body>

@@ -17,6 +17,8 @@ fastapi = "^0.103.2"
 psycopg2-binary = "^2.9.9"
 uvicorn = {version = "^0.23.2", extras = ["standard"]}
 prometheus-fastapi-instrumentator = "^6.1.0"
+pyjwt = {version = "^2.8.0", extras = ["crypto"]}
+pytest = "^7.4.3"
 
 [tool.poetry.group.dev.dependencies]
 

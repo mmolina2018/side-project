@@ -6,6 +6,7 @@ body {
 
 table {
     width: 50%;
+    border: 1px;
     border-collapse: collapse;
     margin-bottom: 10px;
     margin: auto;

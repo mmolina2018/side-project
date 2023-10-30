@@ -1,5 +1,5 @@
 from database.psql import _get_db_targets
-from .exceptions import UserIdError
+from .exceptions import UserIdError, DatabaseError
 
 
 def BaseSuccess(result):
@@ -15,13 +15,14 @@ def get_targets(
     session,
     handle_success: BaseSuccess,
     handle_error: BaseError,
-) -> dict[str, list]:
-    with session() as conn:
+) -> list:
+    with session(DatabaseError,handle_error) as conn:
         try:
             matches = _get_db_targets(user_id=user_id, conn=conn)
+          
             if len(matches) == 0:
                 raise UserIdError(user_id)
-            result = {user_id: matches}
-            return handle_success(result)
+            
+            return handle_success(matches)
         except UserIdError as e:
             return handle_error(e)

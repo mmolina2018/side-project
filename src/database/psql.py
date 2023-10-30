@@ -3,7 +3,7 @@ from psycopg2 import pool
 from contextlib import contextmanager
 db_config = {
     "name": "sideproject",
-    "user": "myuser",
+    "user": "postgres",
     "password": "pass",
     "host": "localhost",
     "port": "5432",
@@ -27,12 +27,13 @@ connection_pool = psycopg2.pool.ThreadedConnectionPool(
 )
 
 @contextmanager
-def session():
+def session(DatabaseError,handle_error):
     session = connection_pool.getconn()
     try:
         yield session
-    except Exception:
+    except DatabaseError as e:
         session.rollback()
+        return handle_error(e)
     
     finally:
         connection_pool.putconn(session)
@@ -42,7 +43,7 @@ def session():
 def _get_db_targets(user_id, conn):
     with conn.cursor() as cur:
         cur.execute(
-            "SELECT m.match_id, m.target_id, m.info FROM match m JOIN targets t ON m.target_id = t.target_id WHERE t.user_id = %s",
+            "SELECT m.match_id, m.target_id, m.info FROM match m JOIN targets t ON m.target_id = t.target_id WHERE t.user_id = %s ORDER BY m.target_id",
             (user_id,),
         )
         result = cur.fetchall()
