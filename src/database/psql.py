@@ -1,6 +1,7 @@
 import psycopg2
 from psycopg2 import pool
 from contextlib import contextmanager
+from typing import Optional
 db_config = {
     "name": "sideproject",
     "user": "postgres",
@@ -40,7 +41,7 @@ def session(DatabaseError,handle_error):
 
 
 
-def _get_db_targets(user_id, conn):
+def _get_db_targets(user_id, conn) -> Optional[list]:
     with conn.cursor() as cur:
         cur.execute(
             "SELECT m.match_id, m.target_id, m.info FROM match m JOIN targets t ON m.target_id = t.target_id WHERE t.user_id = %s ORDER BY m.target_id",

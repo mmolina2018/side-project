@@ -1,5 +1,6 @@
 from database.psql import _get_db_targets
 from .exceptions import UserIdError, DatabaseError
+from typing import Optional
 
 
 def BaseSuccess(result):
@@ -15,7 +16,7 @@ def get_targets(
     session,
     handle_success: BaseSuccess,
     handle_error: BaseError,
-) -> list:
+) -> Optional[list]:
     with session(DatabaseError,handle_error) as conn:
         try:
             matches = _get_db_targets(user_id=user_id, conn=conn)
