@@ -27,3 +27,12 @@ def get_targets(
             return handle_success(matches)
         except UserIdError as e:
             return handle_error(e)
+        
+def get_login(
+    user,
+    password,
+    session,
+    handle_success: BaseSuccess,
+    handle_error: BaseError,        
+) -> Optional[str]:
+    pass
