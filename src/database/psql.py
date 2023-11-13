@@ -2,6 +2,7 @@ import psycopg2
 from psycopg2 import pool
 from contextlib import contextmanager
 from typing import Optional
+
 db_config = {
     "name": "sideproject",
     "user": "postgres",
@@ -27,18 +28,18 @@ connection_pool = psycopg2.pool.ThreadedConnectionPool(
     host=db_host,
 )
 
+
 @contextmanager
-def session(DatabaseError,handle_error):
+def session(DatabaseError, handle_error):
     session = connection_pool.getconn()
     try:
         yield session
     except DatabaseError as e:
         session.rollback()
         return handle_error(e)
-    
+
     finally:
         connection_pool.putconn(session)
-
 
 
 def _get_db_targets(user_id, conn) -> Optional[list]:
@@ -48,5 +49,16 @@ def _get_db_targets(user_id, conn) -> Optional[list]:
             (user_id,),
         )
         result = cur.fetchall()
+
+    return result
+
+
+def _get_db_credentials(user, password, conn) -> Optional[str]:
+    with conn.cursor() as cur:
+        cur.execute(
+            "SELECT user_id FROM users WHERE username = %s AND password = %s",
+            (user, password),
+        )
+        result = cur.fetchone()
 
     return result
