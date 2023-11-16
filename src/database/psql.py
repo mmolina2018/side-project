@@ -56,9 +56,23 @@ def _get_db_targets(user_id, conn) -> Optional[list]:
 def _get_db_credentials(user, password, conn) -> Optional[str]:
     with conn.cursor() as cur:
         cur.execute(
-            "SELECT user_id FROM users WHERE username = %s AND password = %s",
+            "SELECT user_id FROM users WHERE username = %s AND pass = %s",
             (user, password),
         )
         result = cur.fetchone()
 
     return result
+
+def _create_db_user(user, password, conn, error) -> Optional[str]:
+    print([user,password])
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "INSERT INTO users (username, pass) VALUES (%s, %s);",
+                (user, password),
+            )
+            conn.commit()
+            result = f"The user: {user} was successfully created"
+        return result
+    except:
+        raise error

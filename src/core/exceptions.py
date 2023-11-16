@@ -21,3 +21,10 @@ class CredentialsError(BaseException):
 
     def __str__(self) -> str:
         return "Credentials Error"
+
+class CreateUserError(BaseException):
+    def __init__(self) -> None:
+        super().__init__()
+
+    def __str__(self) -> str:
+        return "This user already exist"

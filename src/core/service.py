@@ -1,11 +1,10 @@
-from database.psql import _get_db_targets, _get_db_credentials
-from .exceptions import UserIdError, DatabaseError, CredentialsError
+from database.psql import _get_db_targets, _get_db_credentials, _create_db_user
+from .exceptions import UserIdError, DatabaseError, CredentialsError, CreateUserError
 from typing import Optional
 
 
 def BaseSuccess(result):
     return result
-
 
 def BaseError(error):
     raise Exception("BaseError")
@@ -39,9 +38,23 @@ def get_login(
     with session(DatabaseError, handle_error) as conn:
         try:
             credentials = _get_db_credentials(user=user, password=password, conn=conn)
-            if len(credentials) == 0:
+            if credentials is None:
                 raise CredentialsError()
 
             return handle_success(credentials[0])
         except CredentialsError as e:
+            return handle_error(e)
+
+def create_user(
+    user,
+    password,
+    session,
+    handle_success: BaseSuccess,
+    handle_error: BaseError,
+) -> Optional[str]:
+    with session(DatabaseError, handle_error) as conn:
+        try:
+            create = _create_db_user(user = user, password = password, conn = conn, error = CreateUserError)
+            return handle_success(create)
+        except CreateUserError as e:
             return handle_error(e)

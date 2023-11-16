@@ -4,6 +4,7 @@ from core.exceptions import (
     DatabaseError,
     UserIdError,
     CredentialsError,
+    CreateUserError,
 )
 
 
@@ -23,5 +24,5 @@ def _handle_client_error(err: Exception):
 def handle_error(err: Exception):
     if isinstance(err, DatabaseError):
         _handle_server_error(err)
-    if isinstance(err, (UserIdError, CredentialsError)):
+    if isinstance(err, (UserIdError, CredentialsError, CreateUserError)):
         _handle_client_error(err)
