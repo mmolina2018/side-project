@@ -1,6 +1,7 @@
 from database.psql import _get_db_targets, _get_db_credentials, _create_db_user
 from .exceptions import UserIdError, DatabaseError, CredentialsError, CreateUserError
 from typing import Optional
+from argon2 import PasswordHasher
 
 
 def BaseSuccess(result):
@@ -36,12 +37,13 @@ def get_login(
     handle_error: BaseError,
 ) -> Optional[str]:
     with session(DatabaseError, handle_error) as conn:
+        ph = PasswordHasher()
         try:
-            credentials = _get_db_credentials(user=user, password=password, conn=conn)
+            credentials = _get_db_credentials(user=user, conn=conn)
             if credentials is None:
                 raise CredentialsError()
-
-            return handle_success(credentials[0])
+            if ph.verify(credentials[1],password):
+                return handle_success(credentials[0])
         except CredentialsError as e:
             return handle_error(e)
 
@@ -53,8 +55,10 @@ def create_user(
     handle_error: BaseError,
 ) -> Optional[str]:
     with session(DatabaseError, handle_error) as conn:
-        try:
-            create = _create_db_user(user = user, password = password, conn = conn, error = CreateUserError)
+        ph = PasswordHasher()
+        hpw = ph.hash(password)
+        try:            
+            create = _create_db_user(user = user, password = hpw, conn = conn, error = CreateUserError)
             return handle_success(create)
         except CreateUserError as e:
             return handle_error(e)

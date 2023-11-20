@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2 import pool
 from contextlib import contextmanager
-from typing import Optional
+from typing import Optional, Tuple
 
 db_config = {
     "name": "sideproject",
@@ -53,11 +53,11 @@ def _get_db_targets(user_id, conn) -> Optional[list]:
     return result
 
 
-def _get_db_credentials(user, password, conn) -> Optional[str]:
+def _get_db_credentials(user, conn) -> Optional[Tuple]:
     with conn.cursor() as cur:
         cur.execute(
-            "SELECT user_id FROM users WHERE username = %s AND pass = %s",
-            (user, password),
+            "SELECT user_id, pass FROM users WHERE username = %s",
+            (user,),
         )
         result = cur.fetchone()
 
