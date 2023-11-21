@@ -42,11 +42,11 @@ def session(DatabaseError, handle_error):
         connection_pool.putconn(session)
 
 
-def _get_db_targets(user_id, conn) -> Optional[list]:
+def _get_db_targets(username, conn) -> Optional[list]:
     with conn.cursor() as cur:
         cur.execute(
-            "SELECT m.match_id, m.target_id, m.info FROM match m JOIN targets t ON m.target_id = t.target_id WHERE t.user_id = %s ORDER BY m.target_id",
-            (user_id,),
+            "SELECT m.match_id, m.target_id, m.info FROM match m JOIN targets t ON m.target_id = t.target_id WHERE t.username = %s ORDER BY m.target_id",
+            (username,),
         )
         result = cur.fetchall()
 
@@ -56,7 +56,7 @@ def _get_db_targets(user_id, conn) -> Optional[list]:
 def _get_db_credentials(user, conn) -> Optional[Tuple]:
     with conn.cursor() as cur:
         cur.execute(
-            "SELECT user_id, pass FROM users WHERE username = %s",
+            "SELECT pass FROM users WHERE username = %s",
             (user,),
         )
         result = cur.fetchone()

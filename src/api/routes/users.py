@@ -15,7 +15,7 @@ def login(
     request: Request,
     credentials: list = Depends(verify_credentials),
 ):
-    user_id = get_login(
+    username = get_login(
         user=credentials[0],
         password=credentials[1],
         session=session,
@@ -23,7 +23,7 @@ def login(
         handle_error=handle_error,
     )
 
-    payload = {"sub": user_id}
+    payload = {"sub": username}
     token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
     return token
 

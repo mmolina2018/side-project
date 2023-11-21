@@ -9,17 +9,17 @@ SECRET_KEY = "pass"
 ALGORITHM = "HS256"
 
 def verify_token(
-    user_id: str, authorization: Optional[str] = Header(None)
+    username: str, authorization: Optional[str] = Header(None)
 ) -> Optional[str]:
     if authorization is None:
         raise HTTPException(status_code=400, detail="Not access token")
     try:
         payload = jwt.decode(authorization, SECRET_KEY, algorithms=[ALGORITHM])
-        if payload.get("sub") != user_id:
+        if payload.get("sub") != username:
             raise HTTPException(status_code=401, detail="You shall not pass")
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Your token isn't valid")
-    return user_id
+    return username
 
 
 def verify_credentials(

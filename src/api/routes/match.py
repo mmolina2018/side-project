@@ -17,17 +17,17 @@ def root(request: Request):
 
 
 
-@router.get("/match/{user_id}")
+@router.get("/match/{username}")
 def match(
     request: Request,
-    user_id: Annotated[str, Depends(verify_token)],
+    username: Annotated[str, Depends(verify_token)],
 ):
     targets = get_targets(
-        user_id=user_id,
+        username=username,
         session=session,
         handle_success=handle_success,
         handle_error=handle_error,
     )
     return templates.TemplateResponse(
-        "result.html", {"request": request, "targets": targets, "user_id": user_id}
+        "result.html", {"request": request, "targets": targets, "username": username}
     )
