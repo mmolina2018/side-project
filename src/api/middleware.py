@@ -1,5 +1,5 @@
 import jwt
-from fastapi import HTTPException,Header
+from fastapi import HTTPException,Header, Body
 from core.service import get_targets, get_login
 from result_handler import handle_success, handle_error
 from database.psql import session
@@ -23,8 +23,8 @@ def verify_token(
 
 
 def verify_credentials(
-    user: Optional[str] = Header(None), hashpass: Optional[str] = Header(None)
+    user: Optional[str] = Body(None), password: Optional[str] = Body(None)
 ) -> Optional[list]:
-    if (user is None) or (hashpass is None):
+    if (user is None) or (password is None):
         raise HTTPException(status_code=400, detail="No credentials") 
-    return [user, hashpass]
+    return [user, password]
