@@ -2,6 +2,7 @@ from database.psql import _get_db_targets, _get_db_credentials, _create_db_user
 from .exceptions import UserIdError, DatabaseError, CredentialsError, CreateUserError
 from typing import Optional
 from argon2 import PasswordHasher
+from argon2.exceptions import Argon2Error
 
 
 def BaseSuccess(result):
@@ -46,6 +47,8 @@ def get_login(
                 return handle_success(user)
         except CredentialsError as e:
             return handle_error(e)
+        except Argon2Error as e:
+            return handle_error(CredentialsError())
 
 def create_user(
     user,
