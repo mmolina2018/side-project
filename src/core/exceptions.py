@@ -12,7 +12,7 @@ class UserIdError(BaseException):
         self.user_id = user_id
 
     def __str__(self) -> str:
-        return f"Can't retrieve matches, user_id not recognized {self.user_id}"
+        return f"Can't retrieve matches, username not recognized {self.user_id}"
 
 
 class CredentialsError(BaseException):

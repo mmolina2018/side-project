@@ -75,4 +75,4 @@ def _create_db_user(user, password, conn, error) -> Optional[str]:
             result = f"The user: {user} was successfully created"
         return result
     except:
-        raise error
+        return error

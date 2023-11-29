@@ -43,6 +43,7 @@ def get_login(
             credentials = _get_db_credentials(user=user, conn=conn)
             if credentials is None:
                 raise CredentialsError()
+            print(credentials[0])
             if ph.verify(credentials[0],password):
                 return handle_success(user)
         except CredentialsError as e:
