@@ -43,7 +43,6 @@ def get_login(
             credentials = _get_db_credentials(user=user, conn=conn)
             if credentials is None:
                 raise CredentialsError()
-            print(credentials[0])
             if ph.verify(credentials[0],password):
                 return handle_success(user)
         except CredentialsError as e:
@@ -61,7 +60,7 @@ def create_user(
     with session(DatabaseError, handle_error) as conn:
         ph = PasswordHasher()
         hpw = ph.hash(password)
-        try:            
+        try:          
             create = _create_db_user(user = user, password = hpw, conn = conn, error = CreateUserError)
             return handle_success(create)
         except CreateUserError as e:

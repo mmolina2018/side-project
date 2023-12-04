@@ -4,8 +4,9 @@ from core.service import get_targets, get_login
 from result_handler import handle_success, handle_error
 from database.psql import session
 from typing import Optional
+import os
 
-SECRET_KEY = "pass"
+SECRET_KEY = os.environ.get("SECRET_KEY", " ")
 ALGORITHM = "HS256"
 
 def verify_token(

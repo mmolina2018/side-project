@@ -2,7 +2,6 @@ import psycopg2
 from psycopg2 import pool
 from contextlib import contextmanager
 from typing import Optional, Tuple
-
 db_config = {
     "name": "sideproject",
     "user": "postgres",
@@ -75,4 +74,4 @@ def _create_db_user(user, password, conn, error) -> Optional[str]:
             result = f"The user: {user} was successfully created"
         return result
     except:
-        return error
+        raise error
