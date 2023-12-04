@@ -4,8 +4,9 @@ from core.service import get_login, create_user
 from result_handler import handle_success, handle_error
 from database.psql import session
 from middleware import verify_credentials
+import os
 
-SECRET_KEY = "pass"
+SECRET_KEY = os.environ.get("SECRET_KEY", " ")
 ALGORITHM = "HS256"
 
 router = APIRouter()
