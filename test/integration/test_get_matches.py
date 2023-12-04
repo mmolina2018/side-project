@@ -41,3 +41,17 @@ def test_get_login_with_valid_credentials():
     )
 
     assert result == "usuario1"
+
+def test_get_login_with_no_valid_credentials():
+    with pytest.raises(HTTPException) as exc:
+
+        result = get_login(
+            user = 'usuariofalso',
+            password = 'pass1',
+            session= session,
+            handle_success=handle_success,
+            handle_error=handle_error
+        )
+
+    assert exc.value.status_code == 400
+    assert exc.value.detail == 'Credentials Error'
